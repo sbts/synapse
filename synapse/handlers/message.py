@@ -138,6 +138,8 @@ class MessageHandler(BaseHandler):
                 direction=source_config.direction,
                 limit=source_config.limit,
                 event_filter=event_filter,
+                from_ts=source_config.from_ts,
+                to_ts=source_config.to_ts,
             )
 
             next_token = pagin_config.from_token.copy_and_replace(

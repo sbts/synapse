@@ -48,9 +48,11 @@ class PaginationConfig(object):
     """A configuration object which stores pagination parameters."""
 
     def __init__(self, from_token=None, to_token=None, direction='f',
-                 limit=None):
+                 limit=None, from_ts=None, to_ts=None):
         self.from_token = from_token
         self.to_token = to_token
+        self.from_ts = from_ts
+        self.to_ts = to_ts
         self.direction = 'f' if direction == 'f' else 'b'
         self.limit = min(int(limit), MAX_LIMIT) if limit is not None else None
 
@@ -74,6 +76,9 @@ class PaginationConfig(object):
 
         from_tok = get_param("from")
         to_tok = get_param("to")
+
+        from_ts = get_param("from_ts")
+        to_ts = get_param("to_ts")
 
         try:
             if from_tok == "END":

@@ -382,7 +382,7 @@ class StreamStore(SQLBaseStore):
 
     @defer.inlineCallbacks
     def paginate_room_events(self, room_id, from_key, to_key=None,
-                             direction='b', limit=-1, event_filter=None):
+                             direction='b', limit=-1, event_filter=None, from_ts=None, to_ts=None):
         # Tokens really represent positions between elements, but we use
         # the convention of pointing to the event before the gap. Hence
         # we have a bit of asymmetry when it comes to equalities.
@@ -405,6 +405,18 @@ class StreamStore(SQLBaseStore):
                 bounds = "%s AND %s" % (bounds, upper_bound(
                     RoomStreamToken.parse(to_key), self.database_engine
                 ))
+
+
+        if direction == 'b':
+            if from_ts:
+                bounds += " AND origin_server_ts < '" + from_ts + "'"
+            if to_ts:
+                bounds += " AND origin_server_ts > '" + to_ts + "'"
+        else:
+            if from_ts:
+                bounds += " AND origin_server_ts > '" + from_ts + "'"
+            if to_ts:
+                bounds += " AND origin_server_ts < '" + to_ts + "'"
 
         filter_clause, filter_args = filter_to_clause(event_filter)
 

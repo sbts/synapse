@@ -409,14 +409,14 @@ class StreamStore(SQLBaseStore):
 
         if direction == 'b':
             if from_ts:
-                bounds += " AND origin_server_ts < '" + from_ts + "'"
+                bounds += " AND origin_server_ts < '%s'" % from_ts
             if to_ts:
-                bounds += " AND origin_server_ts > '" + to_ts + "'"
+                bounds += " AND origin_server_ts > '%s'" % to_ts
         else:
             if from_ts:
-                bounds += " AND origin_server_ts > '" + from_ts + "'"
+                bounds += " AND origin_server_ts > '%s'" % from_ts
             if to_ts:
-                bounds += " AND origin_server_ts < '" + to_ts + "'"
+                bounds += " AND origin_server_ts < '%s'" % to_ts
 
         filter_clause, filter_args = filter_to_clause(event_filter)
 

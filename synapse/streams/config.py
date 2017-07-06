@@ -102,7 +102,7 @@ class PaginationConfig(object):
             limit = default_limit
 
         try:
-            return PaginationConfig(from_tok, to_tok, direction, limit)
+            return PaginationConfig(from_tok, to_tok, direction, limit, from_ts, to_ts)
         except:
             logger.exception("Failed to create pagination config")
             raise SynapseError(400, "Invalid request.")
